@@ -1,0 +1,209 @@
+ 
+#21 merged two lists
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        N=new_list = ListNode()
+        while list1 and list2:
+            if list1.val < list2.val:
+                new_list.next = list1
+            else:
+                new_list.next = list2
+                list2 = list2.next
+
+        new_list = new_list.next
+
+        new_list.next = list1 or list2
+        return N.next
+
+'''链表中的基本要素：
+
+结点(也可以叫节点或元素)，每一个结点有两个域，左边部份叫值域，用于存放用户数据；右边叫指针域，一般是存储着到下一个元素的指针
+head结点，head是一个特殊的结节，head结点永远指向第一个结点
+tail结点，tail结点也是一个特殊的结点，tail结点永远指向最后一个节点
+None，链表中最后一个结点指针域的指针指向None值，因也叫接地点，所以有些资料上用电气上的接地符号代表None'''
+
+#206 reverse list
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        link = head
+        if link is None or link.next is None:
+            return link
+
+        before = link
+        currant = link.next
+        before.next = None
+
+        while currant:
+            get = currant.next
+            currant.next = before
+            before = currant
+            currant = get
+
+        assert isinstance(before, object)
+        return before
+
+		#2add two numbers
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+       #定义一个空的链表
+N=new_list = ListNode(0)
+        cur=0
+        while l1 or l2:
+            if l1:
+                cur+=l1.val
+                l1 = l1.next
+            if l2:
+                cur+=l2.val
+                l2 = l2.next
+            new_list.next = ListNode(cur%10)
+            new_list = new_list.next
+            cur//=10
+        if cur>0:
+            new_list.next=ListNode(cur)
+        return N.next
+		
+        return M.next
+#20
+class Solution:
+    def isValid(self, s: str) -> bool:
+     
+        dict0={'(':')','{':'}','[':']'}
+        a=[]
+        for i in s :
+            if i in dict0:
+                a.append(i)
+            elif len(a)==0 or dict0[a.pop()]!=i:
+                return False
+        return len(a)==0
+        
+#66
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+
+        for i in range(len(digits) - 1, -1, -1):
+            if digits[i] == digits[len(digits) - 1] and 0 < digits[i] < 9:
+                digits[i] += 1
+                return digits
+
+            elif digits[i] == 9:
+                digits[i] = 0
+                if i ==0:
+                    digits.insert(0,1)
+        return digits
+
+    
+    for i in xrange(len(digits)-1, -1, -1):
+        if digits[i] < 9:
+            digits[i] += 1
+            return digits
+        digits[i] = 0
+    return [1] + d#167 twosum2     
+	   index1，index2=0，len（numbers)-1
+        index1,index2 in range(len(numbers))
+        while index1<index2:
+        sum=numbers[index1]+numbers[index2]
+            if sum==target:
+                return index1+1,indnex2+1
+            elif sum>target:
+                index2_=1
+            else:
+                index+=1
+				
+#15
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        add=set()
+        for i in range(len(nums)):
+            j=i+1
+            k=len(nums)-1
+            target=0-nums[i]
+            while j<k:
+                if nums[j]+nums[k]==target:
+                    add.add((nums[i],nums[j],nums[k]))
+                    j+=1
+                    k-=1
+                elif nums[j]+nums[k]>target:
+                    j+=1
+                else:
+                    k-=1
+        return list(add)
+
+#16(继承2sum的逻辑，按照排列顺序对列表内的数字进行递推)
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+
+        nums.sort()
+
+        sum0 = nums[0] + nums[1] + nums[2]
+        for i in range(len(nums)-2):
+            j = i + 1
+            k = len(nums) - 1
+           
+            while j < k: 
+                res = nums[i] + nums[j] + nums[k]
+                if res == target:
+                    return res
+                if abs(sum0-target)>abs(res-target):
+                    sum0=res
+                if res < target:
+                    j += 1
+                elif  res > target:
+                    k -= 1
+        return sum0
+
+
+#18 4sum
+class Solution:
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+
+        nums.sort()
+        add = set()
+        for a in range(len(nums)):
+            for b in range(a + 1, len(nums)):
+                c = b + 1
+                d = len(nums) - 1
+                while c < d:
+                    sum = nums[a] + nums[b] + nums[c] + nums[d]
+                    if sum == target:
+                        add.add((nums[a], nums[b], nums[c], nums[d]))
+                        c += 1
+                        d -= 1
+                    elif sum < target:
+                        c += 1
+                    elif sum > target:
+                        d -= 1
+        return list(add)
+#78 subsets
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        result = [[]]
+
+        for n in nums:
+            for i in range(len(result)):
+                result.append(result[i]+[n])
+        return result
+        
+#53
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        sum0 = target = nums[0]
+        for i in range(1,len(nums)):
+            
+                target = max(nums[i], nums[i] + target)
+                sum0 = max(target, sum0)
+        return sum0
+#228
+'''max()函数用于比较大小'''
+        sum=[]
+        head=0
+        for i in range(len(nums)):
+            if i+1<len(nums) and nums[i+1]==nums[i]+1:
+                continue
+            if i==head :
+                sum.append(str(nums[head]))
+            else:
+                sum.append(str(nums[head])+"->"+str(nums[i]))
+            head+=1
+        return sum
